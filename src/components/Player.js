@@ -109,7 +109,7 @@ export class Player extends React.Component {
         <p>
           {this.state.loaded ? formatTime(this.state.seek) : '0.00'}
           {' / '}
-          {this.state.loaded ? formatTime(this.state.duration) : '0.00'}
+          {this.state.duration ? formatTime(this.state.duration) : '0.00'}
         </p>
       </div>
     );
