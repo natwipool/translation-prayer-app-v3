@@ -21,12 +21,14 @@ export class Player extends React.Component {
       seek: 0
     };
 
-    this.playlists = this.props.playlists.map(({ filename, precept, duration }) => ({
-      ogg: `https://s3-ap-southeast-1.amazonaws.com/transprayer/ogg/${filename}.ogg`,
-      mp3: `https://s3-ap-southeast-1.amazonaws.com/transprayer/mp3/${filename}.mp3`,
-      precept,
-      duration
-    }));
+    this.playlists = this.props.playlists.map(
+      ({ filename, precept, duration }) => ({
+        ogg: `https://s3-ap-southeast-1.amazonaws.com/transprayer/ogg/${filename}.ogg`,
+        mp3: `https://s3-ap-southeast-1.amazonaws.com/transprayer/mp3/${filename}.mp3`,
+        precept,
+        duration
+      })
+    );
   }
 
   componentWillUnmount() {
@@ -40,17 +42,18 @@ export class Player extends React.Component {
   };
 
   onPrevClick = () => {
-    this.props.decrementIndex();
     this.clearRAF();
+    this.props.decrementIndex();
+    console.log(this.props.player.index)
   };
 
   onNextClick = () => {
-    this.props.incrementIndex();
     this.clearRAF();
+    this.props.incrementIndex();
+    console.log(this.props.player.index)
   };
 
   handleOnPlay = () => {
-
     this.renderSeekPos();
   };
 
@@ -134,7 +137,9 @@ export class Player extends React.Component {
         <p>
           {this.state.loaded ? formatTime(this.state.seek) : '0.00'}
           {' / '}
-          {this.state.loaded ? formatTime(this.playlists[this.props.player.index].duration) : '0.00'}
+          {this.state.loaded
+            ? formatTime(this.playlists[this.props.player.index].duration)
+            : '0.00'}
         </p>
       </div>
     );

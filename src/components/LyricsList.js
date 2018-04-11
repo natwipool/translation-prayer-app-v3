@@ -11,16 +11,12 @@ const LyricsList = props => (
       ariaHideApp={false}
     >
       <div>
-      <h3>{props.playlist.precept}</h3>
-        {props.playlist.lyrics.map(lyric =>
-          lyric.map((text, index) => <LyricsListItem key={index} text={text} />)
+        <h3>{props.playlist.precept}</h3>
+        {props.playlist.lyrics.map((text, index) =>
+          <LyricsListItem key={index} text={text} />
         )}
       </div>
-      <button
-        onClick={props.closeLyricModal}
-      >
-        ปิด
-      </button>
+      <button onClick={props.closeLyricModal}>ปิด</button>
     </Modal>
   </div>
 );
