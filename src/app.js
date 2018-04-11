@@ -4,13 +4,13 @@ import { Provider } from 'react-redux';
 import AppRouter from './routers/AppRouter';
 import configureStore from './store/configureStore';
 import { setTransPrayers } from './actions/transPrayers';
-import transPrayersJSON from './data/transPrayersData.json';
+import transPrayersData from './data/transPrayersData.json';
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
 
 const store = configureStore();
 
-store.dispatch(setTransPrayers(transPrayersJSON));
+store.dispatch(setTransPrayers(transPrayersData));
 
 const jsx = (
   <Provider store={store}>

@@ -1,18 +1,31 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PlaylistForm from './PlaylistForm';
-import { addPlaylist } from '../actions/playlists';
+import { startAddPlaylist } from '../actions/playlists';
 
-const AddPlaylistPage = (props) => (
-  <div>
-    <h3>สร้างรายการสวดมนต์</h3>
-    <PlaylistForm
-      onSubmit={(playlist) => {
-        props.dispatch(addPlaylist(playlist));
-        props.history.push('/playlists')
-      }}
-    />
-  </div>
-)
+export class AddPlaylistPage extends React.Component {
+  onSubmit = playlist => {
+    this.props.startAddPlaylist(playlist);
+    this.props.history.push('/playlists');
+  };
+  render() {
+    return (
+      <div>
+        <div>
+          <div>
+            <h3>เพิ่มรายการสวดมนต์</h3>
+          </div>
+        </div>
+        <div>
+          <PlaylistForm onSubmit={this.onSubmit} />
+        </div>
+      </div>
+    );
+  }
+}
 
-export default connect()(AddPlaylistPage);
+const mapDispatchToProps = dispatch => ({
+  startAddPlaylist: playlist => dispatch(startAddPlaylist(playlist))
+});
+
+export default connect(undefined, mapDispatchToProps)(AddPlaylistPage);
