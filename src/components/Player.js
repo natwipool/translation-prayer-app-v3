@@ -32,6 +32,13 @@ export class Player extends React.Component {
     this.props.setPlaying();
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.player.index !== nextProps.player.index) {
+      this.setState(() => ({ loaded: false }));
+      this.props.setPlaying(true);
+    }
+  }
+
   handleOnPlay = () => {
     this.props.setPlaying(true);
     this.renderSeekPos();
