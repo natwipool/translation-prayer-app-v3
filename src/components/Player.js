@@ -21,23 +21,19 @@ export class Player extends React.Component {
       seek: 0
     };
 
-    this.playlists = this.props.playlists.map(({ filename, precept }) => ({
+    this.playlists = this.props.playlists.map(({ filename, precept, duration }) => ({
       ogg: `https://s3-ap-southeast-1.amazonaws.com/transprayer/ogg/${filename}.ogg`,
       mp3: `https://s3-ap-southeast-1.amazonaws.com/transprayer/mp3/${filename}.mp3`,
-      precept
+      precept,
+      duration
     }));
   }
 
   componentWillUnmount() {
     this.clearRAF();
     this.props.setIndex();
-    this.props.setPlaying();
+    this.props.setPlaying(false);
   }
-
-  handleOnPlay = () => {
-    this.props.setPlaying(true);
-    this.renderSeekPos();
-  };
 
   isPlayingToggle = () => {
     this.props.isPlayingToggle();
@@ -53,6 +49,11 @@ export class Player extends React.Component {
     this.clearRAF();
   };
 
+  handleOnPlay = () => {
+
+    this.renderSeekPos();
+  };
+
   handleOnLoad = () => {
     this.setState({
       loaded: true,
@@ -63,12 +64,11 @@ export class Player extends React.Component {
   handleOnEnd = () => {
     if (this.props.player.index + 1 >= this.props.playlists.length) {
       this.props.setIndex();
-      if (this.props.player.isPlaying) {
-        this.props.setPlaying();
-      }
+      this.props.setPlaying(false);
     } else {
       this.clearRAF();
       this.props.incrementIndex();
+      this.props.setPlaying(true);
     }
   };
 
@@ -134,7 +134,7 @@ export class Player extends React.Component {
         <p>
           {this.state.loaded ? formatTime(this.state.seek) : '0.00'}
           {' / '}
-          {this.state.loaded ? this.state.duration : '0.00'}
+          {this.state.loaded ? formatTime(this.playlists[this.props.player.index].duration) : '0.00'}
         </p>
       </div>
     );

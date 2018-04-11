@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 import AppRouter from './routers/AppRouter';
 import configureStore from './store/configureStore';
 import { setTransPrayers } from './actions/transPrayers';
-import transPrayersData from './data/transPrayersData';
 import transPrayersJSON from './data/transPrayersData.json';
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
