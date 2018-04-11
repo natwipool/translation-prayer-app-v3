@@ -26,7 +26,7 @@ export class Player extends React.Component {
     }));
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.clearRAF();
     this.props.setIndex();
     this.props.setPlaying();
@@ -39,15 +39,17 @@ export class Player extends React.Component {
 
   isPlayingToggle = () => {
     this.props.isPlayingToggle();
-  }
+  };
 
   onPrevClick = () => {
     this.props.decrementIndex();
-  }
+    this.clearRAF();
+  };
 
   onNextClick = () => {
     this.props.incrementIndex();
-  }
+    this.clearRAF();
+  };
 
   handleOnLoad = () => {
     this.setState({
@@ -71,7 +73,7 @@ export class Player extends React.Component {
     this.setState(() => ({
       loaded: false,
       seek: 0
-    }))
+    }));
   };
 
   render() {
@@ -109,7 +111,7 @@ export class Player extends React.Component {
         <p>
           {this.state.loaded ? formatTime(this.state.seek) : '0.00'}
           {' / '}
-          {this.state.duration ? formatTime(this.state.duration) : '0.00'}
+          {this.state.loaded ? formatTime(this.state.duration) : '0.00'}
         </p>
       </div>
     );
@@ -124,7 +126,7 @@ const mapDispatchToProps = (dispatch, props) => ({
   incrementIndex: () => dispatch(incrementIndex()),
   decrementIndex: () => dispatch(decrementIndex()),
   isPlayingToggle: () => dispatch(isPlayingToggle()),
-  setPlaying: (boo) => dispatch(setPlaying(boo)),
+  setPlaying: boo => dispatch(setPlaying(boo)),
   setIndex: index => dispatch(setIndex(index))
 });
 
