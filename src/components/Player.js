@@ -27,6 +27,12 @@ export class Player extends React.Component {
     }));
   }
 
+  componentDidMount() {
+    this.setState({
+      duration: this.player.duration()
+    });
+  }
+
   componentWillUnmount() {
     this.clearRAF();
     this.props.setIndex();
