@@ -9,7 +9,7 @@ export default (state = defaultStatePlayerReducer, action) => {
     case 'CLOSE_PLAYER':
       return {
         ...state,
-        closePlayer: !state.closePlayer,
+        closePlayer: action.boolean
       }
     case 'IS_PLAYING_TOGGLE':
       return {

@@ -1,6 +1,7 @@
 // CLOSE_PLAYER
-export const closePlayer = () => ({
+export const closePlayer = (boolean = false) => ({
   type: 'CLOSE_PLAYER',
+  boolean
 });
 
 // IS_PLAYING_TOGGLE

@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import AppRouter from './routers/AppRouter';
 import configureStore from './store/configureStore';
 import { setTransPrayers } from './actions/transPrayers';
+import { startSetPlaylists } from './actions/playlists';
 import transPrayersData from './data/transPrayersData.json';
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
@@ -18,4 +19,8 @@ const jsx = (
   </Provider>
 )
 
-ReactDOM.render(jsx, document.getElementById('app'));
+ReactDOM.render(<p>Loading...</p>, document.getElementById('app'));
+
+store.dispatch(startSetPlaylists()).then(() => {
+  ReactDOM.render(jsx, document.getElementById('app'));
+});

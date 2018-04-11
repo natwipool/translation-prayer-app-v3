@@ -2,22 +2,22 @@
 export default (state = [], action) => {
   switch (action.type) {
     case 'ADD_PLAYLIST':
-      return [...state, action.playlist]
+      return [...state, action.playlist];
+    case 'SET_PLAYLISTS':
+      return action.playlists;
     case 'REMOVE_PLAYLIST':
-      return state.filter(({ id }) =>
-        id !== action.id
-      )
+      return state.filter(({ id }) => id !== action.id);
     case 'EDIT_PLAYLIST':
-      return state.map((playlist) => {
+      return state.map(playlist => {
         if (playlist.id === action.id) {
           return {
             ...playlist,
             ...action.updates
-          }
+          };
         } else {
-          return playlist
+          return playlist;
         }
-      })
+      });
     default:
       return state;
   }
