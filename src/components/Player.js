@@ -22,15 +22,10 @@ export class Player extends React.Component {
     };
 
     this.playlists = this.props.playlists.map(({ filename, precept }) => ({
-      exe: `https://s3-ap-southeast-1.amazonaws.com/transprayer/mp3/${filename}.mp3`,
+      ogg: `https://s3-ap-southeast-1.amazonaws.com/transprayer/ogg/${filename}.ogg`,
+      mp3: `https://s3-ap-southeast-1.amazonaws.com/transprayer/mp3/${filename}.mp3`,
       precept
     }));
-  }
-
-  componentDidMount() {
-    this.setState({
-      duration: this.player.duration()
-    });
   }
 
   componentWillUnmount() {
@@ -65,6 +60,18 @@ export class Player extends React.Component {
     });
   };
 
+  handleOnEnd = () => {
+    if (this.props.player.index + 1 >= this.props.playlists.length) {
+      this.props.setIndex();
+      if (this.props.player.isPlaying) {
+        this.props.setPlaying();
+      }
+    } else {
+      this.clearRAF();
+      this.props.incrementIndex();
+    }
+  };
+
   renderSeekPos = () => {
     this.setState({
       seek: this.player.seek()
@@ -87,10 +94,14 @@ export class Player extends React.Component {
     return (
       <div>
         <ReactHowler
-          src={this.playlists[this.props.player.index].exe}
+          src={[
+            this.playlists[this.props.player.index].ogg,
+            this.playlists[this.props.player.index].mp3
+          ]}
           playing={this.props.player.isPlaying}
           onPlay={this.handleOnPlay}
           onLoad={this.handleOnLoad}
+          onEnd={this.handleOnEnd}
           html5={true}
           ref={ref => (this.player = ref)}
         />
@@ -115,10 +126,15 @@ export class Player extends React.Component {
         >
           <img src="/images/next.png" />
         </button>
+        {this.playlists && this.state.loaded ? (
+          <h3>{this.playlists[this.props.player.index].precept}</h3>
+        ) : (
+          <h3>กำลังโหลด...</h3>
+        )}
         <p>
           {this.state.loaded ? formatTime(this.state.seek) : '0.00'}
           {' / '}
-          {this.state.duration ? formatTime(this.state.duration) : '0.00'}
+          {this.playlists ? formatTime(this.state.duration) : '0.00'}
         </p>
       </div>
     );
